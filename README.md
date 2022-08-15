@@ -13,6 +13,21 @@ I've attempted to make the configuration and function files as straight forward 
 So, this is an attempt at a 'boiled down', to the point script. Most of the over-engineering I've found in similar projects is appropriate solutions to edge cases or customization needs per-project. 
 This is not that. This is for a specific type of set up, which you can of course modify to fit your needs.
 
+## Stuff that it do
+**REQUIRES ssh key authentication to remote machine**
+1. Pull in config file and functions file
+2. Runs tests
+   1. Required CLI commands are tested
+   2. SSH connections are tested 
+   3. Mysql connections are tested
+   4. Local filesystem permissions and Rsync are tested
+3. Creates a backup (sql.gz) of the **local** database (***Heavily compressed, 0MB is not uncommon for starter projects***)
+4. Creates a backup (sql.gz) of the **remote** database, locally
+5. Replaces local database with remote backup
+6. Syncronizes the config folder via `rsync` from remote to local ("Config" folder can be anything/anywhere really)
+7. Tells you how long it all took
+8. Complains a lot about things
+
 ## Getting Started
 This script is not dependent on being in any specific location, just that it's in the same location as the `functions.sh` and `craft-down-sync.conf`  
 I keep this in my `<project root dir>/scripts` folder, but again, put this anywhere you like.
