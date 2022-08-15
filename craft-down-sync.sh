@@ -38,7 +38,7 @@ _note "Validations Complete"
 
 # Backup local db ##################################################
 _header "Local DB Backup"
-if [[ local_uses_docker -eq 1 ]] ; then
+if [[ ${local_uses_docker} == '1' ]] ; then
     docker exec -i ${local_db_container} "bin/bash -c ${local_mysqldump_cmd} ${local_mysql_creds_and_dbname} ${local_excluded_tables_string} ${mysqldump_args} | gzip " | pv > ${local_db_dump_dir}${local_db_dump_file_name}_${date_stamp}.sql.gz 2>/dev/null
 else
     ${local_mysqldump_cmd} ${local_mysql_creds_and_dbname} ${local_excluded_tables_string} ${mysqldump_args} | gzip | pv > ${local_db_dump_dir}${local_db_dump_file_name}_${date_stamp}.sql.gz 2>/dev/null
@@ -75,7 +75,7 @@ _success "Remote DB pulled down to "${remote_backup_file_path}" with size of $((
 # Start local processing ##################################################
 _header "Begin local processing"
 
-if [ ${local_uses_docker} == "1" ]; then
+if [[ ${local_uses_docker} == '1' ]]; then
     zcat "${remote_backup_file_path}" | docker exec -i ${local_db_container} "${local_mysql_cmd} ${local_mysql_creds_and_dbname}"
 else
     zcat "${remote_backup_file_path}" | ${local_mysql_cmd} ${local_mysql_creds_and_dbname}
@@ -86,7 +86,7 @@ _success "Remote backup restored from file ${remote_backup_file_path}"
 # Composer install? npm build? nuke static files? These are things we aren't doing here atm
 
 # Config Sync ##################################################
-if [[ sync_config -eq 1 ]]; then
+if [[ ${sync_config} == '1' ]]; then
     _arrow "Syncing config from remote"
     rsync -az -e "ssh -p ${remote_ssh_port}" --progress $remote_ssh_user@$remote_ssh_host:$remote_config_path $local_config_path
     _errorExitPromptNoSuccessMsg $? "Rsync did not return a 0 result! Continue anyway?"
