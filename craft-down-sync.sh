@@ -91,6 +91,7 @@ if [[ ${sync_config} == '1' ]]; then
     rsync -az -e "ssh -p ${remote_ssh_port}" --progress $remote_ssh_user@$remote_ssh_host:$remote_config_path $local_config_path
     _errorExitPromptNoSuccessMsg $? "Rsync did not return a 0 result! Continue anyway?"
     _success "config sync complete"
+    _warning "RUN php craft project-config/apply in your web container!"
 fi
 
 # Done ##################################################
