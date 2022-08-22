@@ -28,6 +28,9 @@ This is not that. This is for a specific type of set up, which you can of course
 7. Tells you how long it all took
 8. Complains a lot about things
 
+![img.png](img.png)  
+![img_1.png](img_1.png)
+
 ## Getting Started
 This script is not dependent on being in any specific location, just that it's in the same location as the `functions.sh` and `craft-down-sync.conf`  
 I keep this in my `<project root dir>/scripts` folder, but again, put this anywhere you like.
